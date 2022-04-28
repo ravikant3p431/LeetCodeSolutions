@@ -13,6 +13,12 @@ class Solution
     
     //Memoization on accessing from back
     int lcsUsingRecurseMemoizationTraversingFromBack(int x,int y,string &s1,string &s2,vector<vector<int>> &memo);  
+    
+    //DP Solution 
+    int longestCommonSubsequenceDPTraverseFromZero(string a,string b);
+    
+    //DP Solution from the last
+    int longestCommonSubsequenceDPTraverseFromLast(string text1, string text2);
 
     int lcs(int x, int y, string s1, string s2)
     {
@@ -20,9 +26,43 @@ class Solution
           //  return lcsUsingRecursionTraversingFromBack(x,y,s1,s2);
           //  return lcsUsingRecursionTraversingFromZero(0,0,s1,s2);
           //  return lcsUsingRecurseMemoizationTraversingFromZero(0,0,s1,s2,memo);
-          return lcsUsingRecurseMemoizationTraversingFromBack(x,y,s1,s2,memo); 
+          //return lcsUsingRecurseMemoizationTraversingFromBack(x,y,s1,s2,memo); 
+            return longestCommonSubsequenceDPTraverseFromZero(s1,s2);
+        //    return longestCommonSubsequenceDPTraverseFromLast(s1,s2);   
+        
     }
+    
 };
+int Solution::longestCommonSubsequenceDPTraverseFromLast(string text1, string text2) {
+        vector<vector<int>>dp(text1.length()+1,vector<int>(text2.length()+1,-1));
+    for(int i = text1.length() ; i>= 0 ; --i)
+        for(int j = text2.length(); j >=0 ;--j)
+        {
+            if(i == text1.length() || j == text2.length())
+                dp[i][j] = 0;
+            else if(text1[i] == text2[j])
+                dp[i][j] = 1 + dp[i+1][j+1];
+            else
+                dp[i][j] = max(dp[i+1][j],dp[i][j+1]);
+        }
+    return dp[0][0];
+};    
+int Solution::longestCommonSubsequenceDPTraverseFromZero(string text1, string text2) {
+        vector<vector<int>>dp(text1.length()+1,vector<int>(text2.length()+1,-1));
+        
+        for(int i = 0 ; i<= text1.length();++i)
+        {
+            for(int j =0 ; j <= text2.length() ; ++j)
+                if(i == 0 || j ==0 )
+                    dp[i][j] = 0;
+                
+            else if(text1[i-1] == text2[j-1])
+                dp[i][j] = 1 + dp[i-1][j-1];
+            else
+                dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
+        }
+        return dp[text1.length()][text2.length()];
+    }
 int Solution::lcsUsingRecurseMemoizationTraversingFromBack(int x,int y,string &s1,string &s2,vector<vector<int>> &memo)
 {
     if(x == 0 || y == 0 )
