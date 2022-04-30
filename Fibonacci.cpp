@@ -2,21 +2,23 @@ class Solution {
 public:
     int DPSolution(int n);
     int RecursiveSolution(int n);
-    int RecursiveSolutionWithMemoization(int n);
+    int RecursiveSolutionWithMemoization(int n,vector<int> &dp);
     int fib(int n) {
-       // return RecursiveSolutionWithMemoization(n);
+        vector<int> dp (n+1,-1);
+        return RecursiveSolutionWithMemoization(n,dp);
        // return RecursiveSolution(n);
-        return DPSolution(n);
+       // return DPSolution(n);
     }
 };
-int Solution::RecursiveSolutionWithMemoization(int n)
+int Solution::RecursiveSolutionWithMemoization(int n,vector<int> &dp )
 {
-    vector<int> dp(n+1, -1);
     if(n <= 1)
-        dp[n] = n;
+        dp[n] =  n;
     if(dp[n] != -1)
         return dp[n];
-    return dp[n] = RecursiveSolution(n-1) +RecursiveSolution(n-2); 
+    return dp[n] =  RecursiveSolutionWithMemoization(n-1,dp)+ 
+                RecursiveSolutionWithMemoization(n-2,dp);
+   // return  dp[n];
 
 }
 int Solution:: RecursiveSolution(int n)
