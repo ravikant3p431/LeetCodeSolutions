@@ -5,34 +5,26 @@ public:
             return s.length();
         int CurrentLength =0 ;
         int MaxLength =0 ;
-       // map<char,int>mp;
-        string answer = "";
-        string news = "";
-       //out<<"empty Length"<<answer.length()<<endl;
-        for(int i =0 ; i< s.length(); ++i)
-        {
-           
-            // cout<<answer.find(s[i])<<endl; // if found then it will return the index where it  the matching character has been found 
+      string answer = "";
+        for(int i =0 ; i< s.length(); ++i){
+           // if found then it will return the index where it  the matching character has been found 
            int k =answer.find(s[i]);
             if(  k== -1) // return -1 when s[i] is not present in the answer
-           {
-             //  cout<<"racv"<<endl;
-               answer+=s[i];
-             // cout<<answer<<endl;
-           }
-            else 
-            { 
-               //urrentLength = answer.length();'
+             answer+=s[i];
+            else{ 
+               
                 MaxLength = MaxLength >answer.length() ? MaxLength : answer.length();
                 answer.erase(0,k+1);
                 answer+=s[i];
-            }        
-            
-        }
-         MaxLength = MaxLength >answer.length() ? MaxLength : answer.length();
+               }        
+         }
+         MaxLength = MaxLength >answer.length() ? MaxLength : answer.length(); 
+        /*This is to consider the case when all the characters are unique/ and final comparing the final length of the answer with the Current MaxLength*/
                
         return MaxLength;
         
+        
+        // Code By Ramlakhan
 //         if(s.length()<=1)
 //             return s.length();
         
