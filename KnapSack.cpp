@@ -1,6 +1,4 @@
-/*  Driver Code Starts
-This Code is implemented without the usage of the vectors 
-*/
+// { Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -13,39 +11,31 @@ class Solution
     int t[1001][1001];
     int RecursiveCode(int W, int wt[], int val[], int n);
     int RecursiveWithMemoization(int W, int wt[], int val[], int n);
-    int TopDownDP(int W, int wt[], int val[], int n);
+    int TopDownDP(int W, int wt[], int val[], int n,vector<vector<int>> &tp);
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-     //   memset(t,-1,sizeof(t));
-    .   for(int i=0 ;i< n ;i++)
-        {
-            for(int j=0 ; j< W ;j++)
-            {
-                if( i==0 || j ==0)
-                t[i][j] = 0;
-            }
-        }
+     
+        vector<vector<int>>tp(n+1,vector<int>(W+1, -1));
        //return RecursiveWithMemoization(W,wt,val,n);
-       return TopDownDP(W,wt,val,n);
+       return TopDownDP(W,wt,val,n,tp);
     }
 };
-int Solution::TopDownDP(int W, int wt[], int val[], int n)
+int Solution::TopDownDP(int W, int wt[], int val[], int n,vector<vector<int>> &tp)
 {
-    for(int i=1 ; i< n+1;i++)
-    for(int j=1 ; j< W+1;j++)
-    {
-        if(wt[i-1] <= j)
-        {
-           t[i][j] = max( val[i-1] + t[i-1][j-wt[i-1]],
-                     t[i-1][j]
+    for(int i=0 ; i< n+1;i++)
+    for(int j=0 ; j< W+1;j++){
+        if(i ==0 || j == 0)
+        tp[i][j] = 0;
+        else if(wt[i-1] <= j){
+           tp[i][j] = max( val[i-1] + tp[i-1][j-wt[i-1]],
+                     tp[i-1][j]
                     );
         }
-        else if(wt[i-1] > j)
-            t[i][j] =  t[i-1][j];
-        
+        else 
+            tp[i][j] =  tp[i-1][j];
     }
     
-    return t[n][W];
+    return tp[n][W];
 }
 int Solution::RecursiveCode(int W, int wt[], int val[], int n)
 {
