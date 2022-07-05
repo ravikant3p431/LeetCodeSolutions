@@ -14,7 +14,7 @@ void dfs(vector<vector<int>>&grid,int i ,int j ){
 }
 
 void dfsnew(vector<vector<int>>&grid,int i ,int j ,int x0,int y0,vector<pair<int,int>>&v){
-	if(i < 0 || j < 0 || i >= grid.size() || i >= grid[0].size() || grid[i][j] == 0)
+	if(i < 0 || j < 0 || i >= grid.size() || j >= grid[0].size() || grid[i][j] == 0)
 		return ;
 	grid[i][j] = 0; 
 	v.push_back({i-x0,j-y0});
@@ -39,7 +39,7 @@ int distinctIslands(vector<vector<int>>&grid){
 		}
 	}
 	return coords.size();
-	//return count; 								// total number of islands
+	//return count; 					// total number of islands with total number of islands being enabled i.e. dfs function
 }
 
 int main()
